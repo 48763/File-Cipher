@@ -11,7 +11,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
- * @version 1.2.2
+ * @version 1.2.3
  * @author Y.K
  * Github: https://github.com/48763
  * facebook page: https://www.facebook.com/Y.K.fans/?ref=bookmarks
@@ -31,7 +31,14 @@ public class FileCipherStream {
     private static CipherInputStream cipherInputStream;
     private static CipherOutputStream cipherOutputStream;
     
+    /**
+     * 檔案加密
+     */
     public static void file_encrypt(String file_name, byte[] key) throws Exception {
+        /**
+         * 創建暫存檔
+         * 將未加密的檔案做串流加密，寫入至暫存檔
+         */
         file = new File(file_name);
         temp_file = file.createTempFile("test_file", ".txt", file.getAbsoluteFile().getParentFile());
 
@@ -53,6 +60,10 @@ public class FileCipherStream {
         cipherInputStream.close();
         bufferedInputStream.close();
 
+        /**
+         * 將已加密內容的暫存檔，寫回並覆蓋原本的檔案
+         * 再將暫存檔刪除
+         */
         bufferedInputStream = new BufferedInputStream(new FileInputStream(temp_file));
         bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(file));
 
@@ -68,7 +79,14 @@ public class FileCipherStream {
         temp_file.delete();
     }
 
+    /**
+     * 檔案解密
+     */
     public static void file_decrypt(String file_name, byte[] key) throws Exception {
+        /**
+         * 創建一暫存檔
+         * 將已加密的檔案做串流解密，寫入至暫存檔
+         */
         file = new File(file_name);
         temp_file = file.createTempFile("test", ".txt", file.getAbsoluteFile().getParentFile());
 
@@ -90,6 +108,10 @@ public class FileCipherStream {
         bufferedInputStream.close();
         bufferedOutputStream.close();
 
+        /**
+         * 將已解密的暫存檔，寫回並覆蓋原本的檔案
+         * 再將暫存檔刪除
+         */
         bufferedInputStream = new BufferedInputStream(new FileInputStream(temp_file));
         bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(file));
 
