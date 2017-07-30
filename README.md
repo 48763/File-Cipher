@@ -4,18 +4,20 @@
 
 ---
 
-#### public class FileCipherStream
+public class **FileCipherStream**
 
 ### Constructor Summary
 | **Constructor and Description** |
-|------|
-|FileCipherStream()|
-
+| :------ |
+| FileCipherStream() |
+| ```Description``` |
 ### Method Summary
 | **Modifier and Type** | **Method and Description** |
-| ------ | ------ |
+| ------ | :------ |
 | void | file_encrypt(String file_name, byte[] key) |
+|  | ```Description``` |
 | void | file_decrypt(String file_name, byte[] key) | 
+|  | ```Description``` |
 
 
 
