@@ -28,10 +28,11 @@ public class **FileCipherStream**
 
 public static void file_encrypt(String file_name, byte[] key) 
     throws Exception
-Parameters:
-  file_name - 
-  key - 
-Throws:
+/**
+* Parameters:
+*   file_name - 
+*   key - 
+* Throws:
 ```
 
 **file_decrypt**
