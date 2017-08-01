@@ -33,6 +33,7 @@ public static void file_encrypt(String file_name, byte[] key)
 *   file_name - 
 *   key - 
 * Throws:
+*/
 ```
 
 **file_decrypt**
