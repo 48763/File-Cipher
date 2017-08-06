@@ -1,3 +1,8 @@
+# 修正與更新
+### version 1.2.4  
+1. 修正 byte[] 讀出後寫入問題。  
+2. 新增 enfile_read()。
+
 # File-Cipher
 
 ### Class FileCipherStream
@@ -5,6 +10,10 @@
 ---
 
 public class **FileCipherStream**
+
+`FileCipherStream` 提供檔案的加密與解密。因為使用 `filestream`，所以可輕鬆應用在多數的檔案上。  
+
+加密的類型預設為 `AES`，使用者務必要將金鑰保存好。  
 
 ### Constructor Summary
 | **Constructor and Description** |
