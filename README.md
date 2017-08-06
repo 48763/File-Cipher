@@ -18,8 +18,8 @@ public class **FileCipherStream**
 |  | ```Description``` |
 | void | file_decrypt(String file_name, byte[] key) | 
 |  | ```Description``` |
-
-
+| String | enfile_read(String file_name, byte[] key) |
+|  | ```Description``` |
 
 
 ### Method Detail 
@@ -40,6 +40,19 @@ public static void file_encrypt(String file_name, byte[] key)
 ``` java
 
 public static void file_decrypt(String file_name, byte[] key) 
+    throws Exception 
+/**
+* Parameters:
+*    file_name - 
+*    key - 
+* Throws:
+*/
+```
+
+**enfile_read**
+``` java
+
+public static String enfile_read(String file_name, byte[] key)
     throws Exception 
 /**
 * Parameters:
