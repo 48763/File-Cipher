@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.Base64;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 
@@ -10,8 +11,9 @@ import javax.crypto.CipherOutputStream;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+
 /**
- * @version 1.2.3
+ * @version 1.2.4
  * @author Y.K
  * Github: https://github.com/48763
  * facebook page: https://www.facebook.com/Y.K.fans/?ref=bookmarks
@@ -22,6 +24,7 @@ public class FileCipherStream {
 
     private static final String KEY_ALGORTHM = "AES";
     private static final String CIPHER_ALOGORTHM = "AES/ECB/PKCS5Padding";
+    private static byte[] cache = new byte[16];
     private static File file;
     private static File temp_file;
     private static SecretKey secretKey;
@@ -30,6 +33,7 @@ public class FileCipherStream {
     private static BufferedOutputStream bufferedOutputStream;
     private static CipherInputStream cipherInputStream;
     private static CipherOutputStream cipherOutputStream;
+    private static Base64.Encoder encoder = Base64.getEncoder();
     
     /**
      * 檔案加密
@@ -45,15 +49,15 @@ public class FileCipherStream {
         bufferedInputStream = new BufferedInputStream(new FileInputStream(file));
         bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(temp_file));
 
-        secretKey = new SecretKeySpec(key, "AES");
-        cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+        secretKey = new SecretKeySpec(key, KEY_ALGORTHM);
+        cipher = Cipher.getInstance(CIPHER_ALOGORTHM);
         cipher.init(Cipher.ENCRYPT_MODE, secretKey);
         cipherInputStream = new CipherInputStream(bufferedInputStream, cipher);
 
-        byte[] cache = new byte[16];
-
         while(cipherInputStream.read(cache) > 0) {
             bufferedOutputStream.write(cache);
+            cache = null;
+            cache = new byte[16];
         }
         bufferedOutputStream.flush();
         bufferedOutputStream.close();
@@ -67,10 +71,10 @@ public class FileCipherStream {
         bufferedInputStream = new BufferedInputStream(new FileInputStream(temp_file));
         bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(file));
 
-        cache = new byte[16];
-
         while(bufferedInputStream.read(cache) > 0) {
             bufferedOutputStream.write(cache);
+            cache = null;
+            cache = new byte[16];
         }
         bufferedOutputStream.flush();
         bufferedOutputStream.close();
@@ -93,15 +97,15 @@ public class FileCipherStream {
         bufferedInputStream = new BufferedInputStream(new FileInputStream(file));
         bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(temp_file));
 
-        secretKey = new SecretKeySpec(key, "AES");
-        cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+        secretKey = new SecretKeySpec(key, KEY_ALGORTHM);
+        cipher = Cipher.getInstance(CIPHER_ALOGORTHM);
         cipher.init(Cipher.DECRYPT_MODE, secretKey);
         cipherOutputStream = new CipherOutputStream(bufferedOutputStream, cipher);
 
-        byte[] cache = new byte[16];
-
         while(bufferedInputStream.read(cache) > 0) {
             cipherOutputStream.write(cache);
+            cache = null;
+            cache = new byte[16];
         }
         cipherOutputStream.flush();
         cipherOutputStream.close();
@@ -115,10 +119,10 @@ public class FileCipherStream {
         bufferedInputStream = new BufferedInputStream(new FileInputStream(temp_file));
         bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(file));
 
-        cache = new byte[16];
-
         while(bufferedInputStream.read(cache) > 0) {
             bufferedOutputStream.write(cache);
+            cache = null;
+            cache = new byte[16];
         }
         bufferedOutputStream.flush();
         bufferedOutputStream.close();
@@ -127,4 +131,22 @@ public class FileCipherStream {
         temp_file.delete();
     }
 
+    public static String enfile_read(String file_name, byte[] key) throws Exception {
+        file = new File(file_name);
+        bufferedInputStream = new BufferedInputStream(new FileInputStream(file));
+        
+        secretKey = new SecretKeySpec(key, "AES");
+        cipher = Cipher.getInstance(CIPHER_ALOGORTHM);
+        cipher.init(Cipher.DECRYPT_MODE, secretKey);
+        cipherInputStream = new CipherInputStream(bufferedInputStream, cipher);
+
+        String str = "";
+
+        while(cipherInputStream.read(cache) > 0) {
+            str += new String(cache);
+            cache = null;
+            cache = new byte[16];
+        }
+        return str;
+    }
 }
