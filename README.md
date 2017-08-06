@@ -14,11 +14,11 @@ public class **FileCipherStream**
 ### Method Summary
 | **Modifier and Type** | **Method and Description** |
 | ------ | :------ |
-| void | file_encrypt(String file_name, byte[] key) |
+| static void | file_encrypt(String file_name, byte[] key) |
 |  | ```Description``` |
-| void | file_decrypt(String file_name, byte[] key) | 
+| static void | file_decrypt(String file_name, byte[] key) | 
 |  | ```Description``` |
-| String | enfile_read(String file_name, byte[] key) |
+| static String | enfile_read(String file_name, byte[] key) |
 |  | ```Description``` |
 
 
