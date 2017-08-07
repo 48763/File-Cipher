@@ -13,7 +13,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 
 /**
- * @version 1.2.4
+ * @version 1.2.5
  * @author Y.K
  * Github: https://github.com/48763
  * facebook page: https://www.facebook.com/Y.K.fans/?ref=bookmarks
@@ -25,6 +25,7 @@ public class FileCipherStream {
     private static final String KEY_ALGORTHM = "AES";
     private static final String CIPHER_ALOGORTHM = "AES/ECB/PKCS5Padding";
     private static byte[] cache = new byte[16];
+    private static int length;
     private static File file;
     private static File temp_file;
     private static SecretKey secretKey;
@@ -54,10 +55,8 @@ public class FileCipherStream {
         cipher.init(Cipher.ENCRYPT_MODE, secretKey);
         cipherInputStream = new CipherInputStream(bufferedInputStream, cipher);
 
-        while(cipherInputStream.read(cache) > 0) {
-            bufferedOutputStream.write(cache);
-            cache = null;
-            cache = new byte[16];
+        while((length = cipherInputStream.read(cache)) > 0) {
+            bufferedOutputStream.write(cache, 0, length);
         }
         bufferedOutputStream.flush();
         bufferedOutputStream.close();
@@ -71,10 +70,8 @@ public class FileCipherStream {
         bufferedInputStream = new BufferedInputStream(new FileInputStream(temp_file));
         bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(file));
 
-        while(bufferedInputStream.read(cache) > 0) {
-            bufferedOutputStream.write(cache);
-            cache = null;
-            cache = new byte[16];
+        while((length = bufferedInputStream.read(cache)) > 0) {
+            bufferedOutputStream.write(cache, 0, length);
         }
         bufferedOutputStream.flush();
         bufferedOutputStream.close();
@@ -102,10 +99,8 @@ public class FileCipherStream {
         cipher.init(Cipher.DECRYPT_MODE, secretKey);
         cipherOutputStream = new CipherOutputStream(bufferedOutputStream, cipher);
 
-        while(bufferedInputStream.read(cache) > 0) {
-            cipherOutputStream.write(cache);
-            cache = null;
-            cache = new byte[16];
+        while((length = bufferedInputStream.read(cache)) > 0) {
+            cipherOutputStream.write(cache, 0, length);
         }
         cipherOutputStream.flush();
         cipherOutputStream.close();
@@ -119,10 +114,8 @@ public class FileCipherStream {
         bufferedInputStream = new BufferedInputStream(new FileInputStream(temp_file));
         bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(file));
 
-        while(bufferedInputStream.read(cache) > 0) {
-            bufferedOutputStream.write(cache);
-            cache = null;
-            cache = new byte[16];
+        while((length = bufferedInputStream.read(cache)) > 0) {
+            bufferedOutputStream.write(cache, 0, length);
         }
         bufferedOutputStream.flush();
         bufferedOutputStream.close();
@@ -142,10 +135,8 @@ public class FileCipherStream {
 
         String str = "";
 
-        while(cipherInputStream.read(cache) > 0) {
-            str += new String(cache);
-            cache = null;
-            cache = new byte[16];
+        while((length = cipherInputStream.read(cache)) > 0) {
+            str += new String(cache, 0, length);
         }
         return str;
     }
