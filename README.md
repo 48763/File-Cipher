@@ -1,4 +1,7 @@
-# 修正與更新
+# 修改與新增
+### version 1.2.5  
+1. 修改 cache 的使用。  
+2. 新增 length 在串流與字串的使用。  
 ### version 1.2.4  
 1. 修正 byte[] 讀出後寫入問題。  
 2. 新增 enfile_read()。
