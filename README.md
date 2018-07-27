@@ -6,7 +6,6 @@
 1. 修正 byte[] 讀出後寫入問題。  
 2. 新增 enfile_read()。
 
-
 # File-Cipher
 
 ### Class FileCipherStream
